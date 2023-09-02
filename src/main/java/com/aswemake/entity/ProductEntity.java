@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
     @NotNull
     private String name;
@@ -25,11 +27,8 @@ public class ProductEntity {
     private int price;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private MemberEntity member;
 
-    public ProductDTO toDTO(ProductEntity entity) {
+    public static ProductDTO toDTO(ProductEntity entity) {
         return ProductDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())

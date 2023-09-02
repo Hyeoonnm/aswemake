@@ -29,14 +29,8 @@ class MemberApiTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @MockBean
-    private MemberService service;
-
     @Test
-    @DisplayName("회원가입")
+    @DisplayName("회원 가입")
     public void testSignup() throws Exception {
         MemberDTO member = new MemberDTO();
         member.setName("user");

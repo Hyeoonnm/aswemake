@@ -9,14 +9,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
     private final MemberDAO memberDAO;
     private final PasswordEncoder encoder;
+
     @Override
     public MemberDTO findByName(String name) {
         MemberEntity byName = memberDAO.findByName(name);
-        MemberDTO dto = MemberEntity.toDTO(byName);
-        return dto;
+        if (byName == null) {
+            return null;
+        } else return MemberEntity.toDTO(byName);
     }
 
     @Override

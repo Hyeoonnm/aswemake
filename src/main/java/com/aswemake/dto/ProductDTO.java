@@ -16,7 +16,7 @@ public class ProductDTO {
     private int price;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
-    public ProductEntity toEntity(ProductDTO dto) {
+    public static ProductEntity toEntity(ProductDTO dto) {
         return ProductEntity.builder()
                 .id(dto.getId())
                 .name(dto.getName())

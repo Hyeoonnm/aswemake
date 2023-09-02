@@ -1,104 +1,113 @@
-//package com.aswemake.api;
-//
-//import com.aswemake.dao.MemberDAO;
-//import com.aswemake.dto.MemberDTO;
-//import com.aswemake.entity.enums.MemberEnum;
-//import com.aswemake.service.member.MemberService;
-//import com.aswemake.service.product.ProductService;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.MediaType;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.test.context.support.WithMockUser;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//import java.time.LocalDateTime;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//class ProductApiTest {
-//    @Autowired
-//    private MockMvc mockMvc;
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//    @MockBean
-//    private ProductService productService;
-//    @Autowired
-//    private MemberService memberService;
-//    @Autowired
-//    private MemberDAO memberDAO;
-//
-//    @AfterEach
-//    public void deleteAll() {
-//        memberDAO.deleteAll();
-//    }
-//
-//    @Test
-//    @DisplayName("상품 등록 (성공) 테스트")
-//    void addWithAdmin() throws Exception {
-//
-//        MemberDTO dto = new MemberDTO();
-//        dto.setName("admin");
-//        dto.setMemberEnum(MemberEnum.admin);
-//
-//        memberService.signup(dto);
-//
-//        // 사용자 인증
-//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        Map<String, String> map = new HashMap<>();
-//        map.put("name", "테스트 상품");
-//        map.put("price", "1000");
-//        map.put("createDate", String.valueOf(LocalDateTime.now()));
-//
-//        mockMvc.perform(post("/product/v1/api/add")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(map)))
-//                .andExpect(status().isOk())
-//                .andDo(print());
-//    }
-//
-//    @Test
-//    @DisplayName("상품 등록 (실패) 테스트")
-//    @WithMockUser(roles = "user")
-//    void addWithUser() throws Exception {
-//        // 사용자 인증
-//        UserDetails userDetails = customUserDetailService.loadUserByUsername("user");
-//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        Map<String, String> map = new HashMap<>();
-//        map.put("name", "테스트 상품");
-//        map.put("price", "1000");
-//        map.put("createDate", String.valueOf(LocalDateTime.now()));
-//
-//        mockMvc.perform(post("/product/v1/api/add")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(map)))
-//                .andExpect(status().isForbidden()) // Expect a 403 Forbidden status
-//                .andDo(print());
-//    }
-//
-//    @Test
-//    void update() {
-//    }
-//
-//    @Test
-//    void delete() {
-//    }
-//}
+package com.aswemake.api;
+
+import com.aswemake.dto.ProductDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.time.LocalDateTime;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class ProductApiTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    @DisplayName("상품 등록 (성공) 테스트")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void addWithAdmin() throws Exception {
+        ProductDTO product = new ProductDTO();
+        product.setName("테스트 상품");
+        product.setPrice(1000);
+        product.setCreateDate(LocalDateTime.now());
+
+        String productJson = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/product/api/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("상품 등록 (실패) 테스트")
+    @WithMockUser(username = "user", roles = "USER")
+    void addWithUser() throws Exception {
+        ProductDTO product = new ProductDTO();
+        product.setName("테스트 상품");
+        product.setPrice(1000);
+        product.setCreateDate(LocalDateTime.now());
+
+        String productJson = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/product/api/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("상품 수정")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void update() throws Exception {
+        ProductDTO product = new ProductDTO();
+        product.setId(1L);
+        product.setName("상품 2차 수정");
+        product.setPrice(1234);
+
+        String productJson = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/product/api/update/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("상품 삭제")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void delete() throws Exception {
+        ProductDTO product = new ProductDTO();
+        product.setId(1L);
+
+        String productJson = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/product/api/delete/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("상품 수정 리스트")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void prevProductInfo() throws Exception {
+        ProductDTO product = new ProductDTO();
+        product.setId(1L);
+
+        String productJson = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/product/api/prev/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+}

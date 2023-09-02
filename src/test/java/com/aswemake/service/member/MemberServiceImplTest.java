@@ -30,13 +30,13 @@ class MemberServiceImplTest {
     @DisplayName("회원가입")
     void signup() {
         MemberDTO member = new MemberDTO();
-        member.setName("user");
-        member.setPassword("1111");
+        member.setName("테스트 유저");
+        member.setPassword("1234");
         member.setRole("USER");
         MemberDTO signup = memberService.signup(member);
 
-        assertThat("user").isEqualTo(signup.getName());
-        boolean matches = encoder.matches("1111", signup.getPassword());
+        assertThat("테스트 유저").isEqualTo(signup.getName());
+        boolean matches = encoder.matches("1234", signup.getPassword());
         assertTrue(matches);
         assertThat("ROLE_USER").isEqualTo(signup.getRole());
     }
