@@ -1,26 +1,45 @@
 package com.aswemake.config;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/product/v1/api/add").hasRole("admin") // "/product/v1/api/add" 엔드포인트에는 "admin" 역할이 필요
-                .antMatchers("/product/v1/api/update").hasRole("admin") // "/product/v1/api/add" 엔드포인트에는 "admin" 역할이 필요
-                .antMatchers("/product/v1/api/delete").hasRole("admin") // "/product/v1/api/add" 엔드포인트에는 "admin" 역할이 필요
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/member/api/signup").permitAll() // 회원가입 페이지는 모든 사용자에게 허용
+                .antMatchers("/product/**").hasRole("ADMIN") // ADMIN 권한 필요
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login") // 로그인 페이지 설정
+                .permitAll()
                 .and()
-                .httpBasic();
+                .logout()
+                .permitAll();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
+                .and()
+                .withUser("admin").password(passwordEncoder().encode("adminpassword")).roles("ADMIN");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

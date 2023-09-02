@@ -1,8 +1,6 @@
 package com.aswemake.api;
 
-import com.aswemake.dto.MemberDTO;
 import com.aswemake.dto.ProductDTO;
-import com.aswemake.entity.enums.MemberEnum;
 import com.aswemake.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

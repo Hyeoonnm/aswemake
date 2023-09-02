@@ -1,38 +1,67 @@
 package com.aswemake.entity;
 
 import com.aswemake.dto.MemberDTO;
-import com.aswemake.entity.enums.MemberEnum;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
-import java.util.List;
+import java.util.Collection;
 
-@Getter
 @Entity
 @Table(name = "member")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
-public class MemberEntity {
+public class MemberEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
-
-    // 이름
-    @Column(name = "member_name")
+    @Column(unique = true)
     private String name;
+    private String password;
+    private String role;
 
-    @Enumerated(EnumType.STRING)
-    private MemberEnum memberEnum;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
-    public MemberDTO toDto(MemberEntity memberEntity) {
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    public static MemberDTO toDTO(MemberEntity entity) {
         return MemberDTO.builder()
-                .id(memberEntity.getId())
-                .name(memberEntity.getName())
-                .memberEnum(memberEntity.getMemberEnum())
+                .name(entity.getName())
+                .password(entity.getPassword())
+                .role(entity.getRole())
                 .build();
     }
 }
