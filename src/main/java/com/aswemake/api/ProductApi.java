@@ -19,6 +19,7 @@ public class ProductApi {
 
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestBody ProductDTO productDTO) {
+        productDTO.setCreateDate(LocalDateTime.now());
         productService.save(productDTO);
         return ResponseEntity.ok().body("상품 등록");
     }
@@ -27,6 +28,7 @@ public class ProductApi {
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
         ProductDTO findProduct = productService.findById(id);
         if (findProduct != null) {
+            dto.setCreateDate(findProduct.getCreateDate());
             dto.setModifiedDate(LocalDateTime.now());
 
             findProduct.setPrice(dto.getPrice());

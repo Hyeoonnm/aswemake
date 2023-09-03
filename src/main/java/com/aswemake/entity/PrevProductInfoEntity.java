@@ -27,13 +27,25 @@ public class PrevProductInfoEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-    public static PrevProductInfoEntity toEntity(ProductDTO dto) {
+    public static PrevProductInfoEntity toEntity(ProductDTO dto, PrevProductInfoEntity prevInfo, int price) {
         ProductEntity entity = ProductDTO.toEntity(dto);
-        return PrevProductInfoEntity.builder()
-                .price(dto.getPrice())
-                .startDate(dto.getCreateDate())
-                .endDate(dto.getModifiedDate())
-                .product(entity)
-                .build();
+
+        // 첫 수정 상품
+        if (prevInfo == null) {
+            return PrevProductInfoEntity.builder()
+                    .price(price)
+                    .startDate(dto.getCreateDate())
+                    .endDate(dto.getModifiedDate())
+                    .product(entity)
+                    .build();
+        } else {
+            // 한 번 이후의 수정 상품
+            return PrevProductInfoEntity.builder()
+                    .price(price)
+                    .startDate(prevInfo.getEndDate())
+                    .endDate(dto.getModifiedDate())
+                    .product(entity)
+                    .build();
+        }
     }
 }

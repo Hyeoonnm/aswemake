@@ -23,9 +23,22 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDTO save(ProductDTO dto) {
         ProductEntity toEntity = ProductDTO.toEntity(dto);
+        int price = 0;
+        if (productDAO.findProductById(toEntity.getId()) != null) {
+            ProductEntity product = productDAO.findProductById(toEntity.getId());
+            price = product.getPrice();
+        }
 
         if (dto.getModifiedDate() != null) {
-            PrevProductInfoEntity prevEntity = PrevProductInfoEntity.toEntity(dto);
+            Long id = toEntity.getId();
+            PrevProductInfoEntity byProductId;
+            List<PrevProductInfoEntity> list = prevProductInfoDAO.findAllByProductId(id);
+            if (list.size() > 1) {
+              byProductId = list.get(list.size()-1);
+            } else {
+                byProductId = prevProductInfoDAO.findByProductId(id);
+            }
+            PrevProductInfoEntity prevEntity = PrevProductInfoEntity.toEntity(dto, byProductId, price);
             prevProductInfoDAO.save(prevEntity);
         }
 

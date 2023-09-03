@@ -1,12 +1,14 @@
 package com.aswemake.api;
 
 import com.aswemake.dto.ProductDTO;
+import com.aswemake.service.product.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,6 +26,8 @@ class ProductApiTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private ProductService productService;
 
     @Test
     @DisplayName("상품 등록 (성공) 테스트")
@@ -31,7 +35,7 @@ class ProductApiTest {
     void addWithAdmin() throws Exception {
         ProductDTO product = new ProductDTO();
         product.setName("테스트 상품");
-        product.setPrice(1000);
+        product.setPrice(1);
         product.setCreateDate(LocalDateTime.now());
 
         String productJson = objectMapper.writeValueAsString(product);
@@ -49,7 +53,7 @@ class ProductApiTest {
     void addWithUser() throws Exception {
         ProductDTO product = new ProductDTO();
         product.setName("테스트 상품");
-        product.setPrice(1000);
+        product.setPrice(1);
         product.setCreateDate(LocalDateTime.now());
 
         String productJson = objectMapper.writeValueAsString(product);
@@ -66,13 +70,13 @@ class ProductApiTest {
     @WithMockUser(username = "admin", roles = "ADMIN")
     void update() throws Exception {
         ProductDTO product = new ProductDTO();
-        product.setId(1L);
-        product.setName("상품 2차 수정");
-        product.setPrice(1234);
+        product.setId(6L);
+        product.setName("상품 수정 2차");
+        product.setPrice(10000);
 
         String productJson = objectMapper.writeValueAsString(product);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/product/api/update/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/product/api/update/" + product.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(productJson))
                 .andExpect(status().isOk())
@@ -88,7 +92,7 @@ class ProductApiTest {
 
         String productJson = objectMapper.writeValueAsString(product);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/product/api/delete/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/product/api/delete/" + product.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(productJson))
                 .andExpect(status().isOk())
@@ -99,12 +103,13 @@ class ProductApiTest {
     @DisplayName("상품 수정 리스트")
     @WithMockUser(username = "admin", roles = "ADMIN")
     void prevProductInfo() throws Exception {
+
         ProductDTO product = new ProductDTO();
         product.setId(1L);
 
         String productJson = objectMapper.writeValueAsString(product);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/product/api/prev/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/product/api/prev/" + product.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(productJson))
                 .andExpect(status().isOk())
