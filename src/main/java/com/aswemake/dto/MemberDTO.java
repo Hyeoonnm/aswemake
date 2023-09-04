@@ -1,7 +1,12 @@
 package com.aswemake.dto;
 
 import com.aswemake.entity.MemberEntity;
+import com.aswemake.entity.enums.MemberEnum;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -9,15 +14,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {
-    private String name;
+    private String username;
     private String password;
-    private String role;
+    private MemberEnum role;
 
     public static MemberEntity toEntity(MemberDTO dto) {
         return MemberEntity.builder()
-                .name(dto.getName())
+                .username(dto.getUsername())
                 .password(dto.getPassword())
-                .role(dto.getRole())
+                .role(MemberEnum.USER)
                 .build();
     }
+
 }

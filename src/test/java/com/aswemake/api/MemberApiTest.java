@@ -28,7 +28,7 @@ class MemberApiTest {
     @DisplayName("회원 가입")
     public void testSignup() throws Exception {
         MemberDTO member = new MemberDTO();
-        member.setName("user");
+        member.setUsername("user");
         member.setPassword("1111");
         member.setRole("USER");
 
