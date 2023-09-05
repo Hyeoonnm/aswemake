@@ -1,5 +1,6 @@
 package com.aswemake.config;
 
+import com.aswemake.entity.enums.MemberRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,22 +18,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .formLogin().disable()
                 .httpBasic().disable()
                 .cors().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .authorizeRequests()
                 .antMatchers("/member/api/**").permitAll()
-                .antMatchers("/product/api/**").hasRole("ADMIN")
-                .anyRequest().permitAll();
+                .antMatchers("/product/api/**", "/member/admin").hasAnyAuthority(MemberRole.ADMIN.name())
+                .antMatchers("/security-login/info").authenticated()
+                .anyRequest().permitAll()
+
+                .and()
+                .formLogin()
+                .usernameParameter("loginId")
+                .passwordParameter("password")
+                .loginProcessingUrl("/login")  // 로그인 Form Action Url
+                .loginPage("/member/login")
+                .defaultSuccessUrl("/member/info")
+                .failureUrl("/member/login")
+
+                .and()
+                .logout()
+                .logoutUrl("/security-login/logout")
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }

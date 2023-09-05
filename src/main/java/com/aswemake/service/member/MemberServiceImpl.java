@@ -3,47 +3,74 @@ package com.aswemake.service.member;
 import com.aswemake.dao.MemberDAO;
 import com.aswemake.dto.MemberDTO;
 import com.aswemake.entity.MemberEntity;
-import com.aswemake.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberDAO memberDAO;
     private final PasswordEncoder encoder;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Long signup(MemberDTO member) throws Exception {
-        if (memberDAO.findByUsername(member.getUsername()).isPresent()) {
+        if (memberDAO.findByLoginId(member.getLoginId()).isPresent()) {
             return null;
         }
 
+        member.setPassword(encoder.encode(member.getPassword()));
         MemberEntity memberEntity = MemberDTO.toEntity(member);
         MemberEntity saveMember = memberDAO.save(memberEntity);
-        saveMember.encodePassword(encoder);
 
         return 1L;
     }
 
-    @Override
-    public String login(MemberDTO memberDTO) {
-        MemberEntity member = memberDAO.findByUsername(memberDTO.getUsername())
-                .orElse(null);
-        if (member == null) {
+    /**
+     *  로그인 기능
+     *  화면에서 LoginRequest(loginId, password)을 입력받아 loginId와 password가 일치하면 User return
+     *  loginId가 존재하지 않거나 password가 일치하지 않으면 null return
+     */
+    public MemberEntity login(MemberDTO dto) {
+        Optional<MemberEntity> optionalUser = memberDAO.findByLoginId(dto.getLoginId());
+        // loginId와 일치하는 User가 없으면 null return
+        if(optionalUser.isEmpty()) {
             return null;
         }
+        MemberEntity member = optionalUser.get();
+        if (!encoder.matches(dto.getPassword(), member.getPassword())) {
+            return null;
+        }
+        return member;
+    }
 
-        List<String> roles = new ArrayList<>();
-        roles.add(String.valueOf(member.getRole()));
+    /**
+     * userId(Long)를 입력받아 User을 return 해주는 기능
+     * 인증, 인가 시 사용
+     * userId가 null이거나(로그인 X) userId로 찾아온 User가 없으면 null return
+     * userId로 찾아온 User가 존재하면 User return
+     */
+    public MemberEntity getLoginUserById(Long userId) {
+        if(userId == null) return null;
 
-        return jwtTokenProvider.createToken(member.getUsername(), roles);
+        Optional<MemberEntity> optionalUser = memberDAO.findById(userId);
+        return optionalUser.orElse(null);
+
+    }
+
+    /**
+     * loginId(String)를 입력받아 User을 return 해주는 기능
+     * 인증, 인가 시 사용
+     * loginId가 null이거나(로그인 X) userId로 찾아온 User가 없으면 null return
+     * loginId로 찾아온 User가 존재하면 User return
+     */
+    public MemberEntity getLoginUserByLoginId(String loginId) {
+        if(loginId == null) return null;
+
+        Optional<MemberEntity> optionalUser = memberDAO.findByLoginId(loginId);
+        return optionalUser.orElse(null);
+
     }
 }

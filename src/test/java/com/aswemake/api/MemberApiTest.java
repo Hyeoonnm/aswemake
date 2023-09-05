@@ -1,6 +1,7 @@
 package com.aswemake.api;
 
 import com.aswemake.dto.MemberDTO;
+import com.aswemake.entity.enums.MemberRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,9 +29,9 @@ class MemberApiTest {
     @DisplayName("회원 가입")
     public void testSignup() throws Exception {
         MemberDTO member = new MemberDTO();
-        member.setUsername("user");
-        member.setPassword("1111");
-        member.setRole("USER");
+        member.setLoginId("admin");
+        member.setPassword("1234");
+        member.setRole(MemberRole.ADMIN);
 
         String memberJson = objectMapper.writeValueAsString(member);
 

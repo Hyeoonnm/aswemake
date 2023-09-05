@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDTO save(ProductDTO dto) {
+    public void save(ProductDTO dto) {
         ProductEntity toEntity = ProductDTO.toEntity(dto);
         int price = 0;
         if (productDAO.findProductById(toEntity.getId()) != null) {
@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
         ProductEntity save = productDAO.save(toEntity);
 
-        return ProductEntity.toDTO(save);
+        ProductEntity.toDTO(save);
     }
 
     @Override

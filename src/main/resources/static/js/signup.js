@@ -1,13 +1,13 @@
 document.getElementById("signupBtn").onclick = function () {
-    const username = document.querySelector("input[name='username']").value;
+    const loginId = document.querySelector("input[name='loginId']").value;
     const password = document.querySelector("input[name='password']").value;
-    const role = document.querySelector("input[name='role']").value;
 
     const data = {
-        username : username,
+        loginId : loginId,
         password : password,
-        role : role
     }
+
+    console.log(data);
 
     fetch("../member/api/signup", {
         method: "POST",

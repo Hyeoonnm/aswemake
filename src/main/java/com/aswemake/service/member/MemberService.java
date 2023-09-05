@@ -8,6 +8,6 @@ import java.util.Map;
 public interface MemberService {
 
     Long signup(MemberDTO member) throws Exception;
-
-    String login(MemberDTO members);
+    MemberEntity getLoginUserByLoginId(String loginId);
+    MemberEntity getLoginUserById(Long memberId);
 }
