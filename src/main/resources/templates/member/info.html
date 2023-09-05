@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>INFO</title>
@@ -8,9 +8,23 @@
 <div>
   <h2>유저 정보</h2>
   <div>
-    <div th:text="|loginId : ${user.loginId}|"/>
-    <div th:text="|role : ${user.role}|"/>
+    <div th:text="|아이디 : ${user.loginId}|"/>
+    <div th:text="|권한 : ${user.role}|"/>
+    <div th:text="|멤버 번호 : ${user.id}|"/>
   </div>
+  <!-- admin 버튼 -->
+  <button th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'')')}"
+          type="button" id="editButton">수정</button>
+  <button th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'')')}"
+          type="button" id="deleteButton">삭제</button>
+
+  <!-- user 버튼 -->
+  <button th:if="${#authorization.expression('hasAnyAuthority(''USER'')')}"
+          type="button" id="addButton">추가하기</button>
+
+  <a href="../product/list">상품 목록</a>
+  <a href="">주문 목록</a>
+  <a href="/security-login/logout">로그아웃</a>
 </div>
 </body>
 </html>

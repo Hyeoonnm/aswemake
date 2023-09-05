@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      *  로그인 기능
-     *  화면에서 LoginRequest(loginId, password)을 입력받아 loginId와 password가 일치하면 User return
+     *  화면에서 loginId, password 입력받아 loginId와 password가 일치하면 User return
      *  loginId가 존재하지 않거나 password가 일치하지 않으면 null return
      */
     public MemberEntity login(MemberDTO dto) {
@@ -47,21 +47,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     * userId(Long)를 입력받아 User을 return 해주는 기능
-     * 인증, 인가 시 사용
-     * userId가 null이거나(로그인 X) userId로 찾아온 User가 없으면 null return
-     * userId로 찾아온 User가 존재하면 User return
-     */
-    public MemberEntity getLoginUserById(Long userId) {
-        if(userId == null) return null;
-
-        Optional<MemberEntity> optionalUser = memberDAO.findById(userId);
-        return optionalUser.orElse(null);
-
-    }
-
-    /**
-     * loginId(String)를 입력받아 User을 return 해주는 기능
      * 인증, 인가 시 사용
      * loginId가 null이거나(로그인 X) userId로 찾아온 User가 없으면 null return
      * loginId로 찾아온 User가 존재하면 User return
@@ -71,6 +56,14 @@ public class MemberServiceImpl implements MemberService {
 
         Optional<MemberEntity> optionalUser = memberDAO.findByLoginId(loginId);
         return optionalUser.orElse(null);
+    }
+
+    public MemberEntity getLoginUserById(Long userId) {
+        if(userId == null) return null;
+
+        Optional<MemberEntity> optionalUser = memberDAO.findById(userId);
+        return optionalUser.orElse(null);
+
 
     }
 }

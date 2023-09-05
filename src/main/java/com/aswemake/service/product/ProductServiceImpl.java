@@ -60,6 +60,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> findAll() {
+        List<ProductEntity> list = productDAO.findAll();
+        List<ProductDTO> dtoList = new ArrayList<>();
+        for (ProductEntity x :
+                list) {
+            ProductDTO dto = ProductEntity.toDTO(x);
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
+
+    @Override
     public ProductDTO findById(Long id) {
         ProductEntity byId = productDAO.findProductById(id);
         return ProductEntity.toDTO(byId);

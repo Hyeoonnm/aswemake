@@ -4,6 +4,7 @@ import com.aswemake.dto.PrevProductInfoDTO;
 import com.aswemake.dto.ProductDTO;
 import com.aswemake.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,13 @@ import java.util.List;
 public class ProductApi {
     // 생성, 수정, 삭제는 마트의 권한이 필요하다.
     private final ProductService productService;
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ProductDTO>> list() {
+        List<ProductDTO> list = productService.findAll();
+        System.out.println("list = " + list);
+        return ResponseEntity.ok().body(list);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestBody ProductDTO productDTO) {

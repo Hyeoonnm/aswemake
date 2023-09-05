@@ -9,4 +9,5 @@ public interface MemberDAO extends JpaRepository<MemberEntity, Long> {
     boolean existsByLoginId(String loginId);
     Optional<MemberEntity> findByLoginId(String loginId);
 
+    MemberEntity findMemberById(Long memberId);
 }

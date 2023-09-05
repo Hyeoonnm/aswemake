@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/member/api/**").permitAll()
                 .antMatchers("/product/api/**", "/member/admin").hasAnyAuthority(MemberRole.ADMIN.name())
-                .antMatchers("/security-login/info").authenticated()
+                .antMatchers("/member/info", "product/api/list").hasAnyAuthority(MemberRole.USER.name(), MemberRole.ADMIN.name())
                 .anyRequest().permitAll()
 
                 .and()

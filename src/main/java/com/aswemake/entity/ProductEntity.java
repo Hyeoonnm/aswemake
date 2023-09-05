@@ -21,9 +21,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
-    @NotNull
     private String name;
-    @NotNull
     private int price;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;

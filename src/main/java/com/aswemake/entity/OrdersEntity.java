@@ -3,7 +3,6 @@ package com.aswemake.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.invoke.CallSite;
 import java.util.List;
 
 @Getter
@@ -20,12 +19,21 @@ public class OrdersEntity {
     @Column(name = "orders_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    private List<OrderListEntity> ordersList;
+    @OneToMany
+    @JoinColumn(name = "order_item_id")
+    private List<OrderItemEntity> ordersList;
 
     private int deliveryPrice;
+
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItemEntity orderList : ordersList) {
+            totalPrice += orderList.getTotalPrice();
+        }
+        return totalPrice;
+    }
 }

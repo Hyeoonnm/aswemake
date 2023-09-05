@@ -14,4 +14,6 @@ public interface ProductService {
     void save(ProductDTO productDTO);
 
     List<PrevProductInfoDTO> findPrevProduct(Long id);
+
+    List<ProductDTO> findAll();
 }
