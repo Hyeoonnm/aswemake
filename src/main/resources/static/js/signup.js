@@ -1,10 +1,12 @@
 document.getElementById("signupBtn").onclick = function () {
     const loginId = document.querySelector("input[name='loginId']").value;
     const password = document.querySelector("input[name='password']").value;
+    const role = document.querySelector("select[name='role']").value;
 
     const data = {
         loginId : loginId,
         password : password,
+        role : role
     }
 
     console.log(data);

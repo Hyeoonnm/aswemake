@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input hidden="hidden" type="text" name="memberId" th:value="${user.id}">
+<div>
+    <select name="coupon">
+        <option value="전체 비율">전체 비율 할인</option>
+        <option value="전체 고정">전체 고정 금액 할인</option>
+        <option value="특정 비율">특정 상품 비율 할인</option>
+        <option value="특정 고정">특정 상품 고정 금액 할인</option>
+    </select>
+
+    <button type="button" id="couponBtn">쿠폰 적용</button>
+</div>
+</body>
+<script src="/js/order/list.js"></script>
+</html>

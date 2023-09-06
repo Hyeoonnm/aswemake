@@ -10,20 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/order")
 @RequiredArgsConstructor
-public class ProductController {
-
+public class OrderController {
     private final MemberService memberService;
     @GetMapping("/list")
     public String list(Model model, Authentication auth) {
         MemberEntity loginUser = memberService.getLoginUserByLoginId(auth.getName());
         model.addAttribute("user", loginUser);
-        return "product/list";
-    }
-
-    @GetMapping("/add")
-    public String add() {
-        return "product/add";
+        return "order/list";
     }
 }

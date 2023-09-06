@@ -18,7 +18,7 @@ public class MemberDTO {
         return MemberEntity.builder()
                 .loginId(dto.getLoginId())
                 .password(dto.getPassword())
-                .role(MemberRole.ADMIN)
+                .role(dto.getRole())
                 .build();
     }
 

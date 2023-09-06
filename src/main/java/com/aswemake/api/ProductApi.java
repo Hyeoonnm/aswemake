@@ -21,7 +21,6 @@ public class ProductApi {
     @GetMapping("/list")
     public ResponseEntity<List<ProductDTO>> list() {
         List<ProductDTO> list = productService.findAll();
-        System.out.println("list = " + list);
         return ResponseEntity.ok().body(list);
     }
 
@@ -59,6 +58,9 @@ public class ProductApi {
     @GetMapping("/prev/{id}")
     public ResponseEntity<List<PrevProductInfoDTO>> list(@PathVariable Long id) {
         List<PrevProductInfoDTO> list = productService.findPrevProduct(id);
+        if (list.size() < 1) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok().body(list);
     }
 }

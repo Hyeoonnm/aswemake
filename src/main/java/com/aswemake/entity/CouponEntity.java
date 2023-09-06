@@ -20,11 +20,10 @@ public class CouponEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coupon_id")
     private Long id;
-
+    private String name;
     @Enumerated(EnumType.STRING)
     @NotNull
     private CouponType couponType;
-
     @Enumerated(EnumType.STRING)
     @NotNull
     private CouponRange couponRange;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
     <title>상품 목록</title>
     <style>
@@ -64,8 +64,8 @@
     <!-- 상품 목록이 여기에 동적으로 추가됩니다. -->
 </div>
 
-<a href="#" id="backBtn">뒤로 가기</a>
-<a href="#" id="addProductBtn">상품 등록</a>
+<a href="../member/info" id="backBtn">뒤로 가기</a>
+<a href="../product/add" th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'')')}" id="addProductBtn">상품 등록</a>
 
 
 <div id="editModal" class="modal">
@@ -77,6 +77,9 @@
             <br>
             <label for="modalPrice">가격:</label>
             <input type="text" id="modalPrice" name="price">
+            <input hidden="hidden" name="memberId" th:value="${user.id}">
+        <input id="adminAuth" th:value="|${#authorization.expression('hasAnyAuthority(''ADMIN'')')}|" type="hidden"/>
+        <input id="userAuth" th:value="|${#authorization.expression('hasAnyAuthority(''USER'')')}|" type="hidden"/>
             <br>
             <button type="button" id="saveChangesBtn">저장</button>
     </div>

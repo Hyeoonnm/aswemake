@@ -15,7 +15,10 @@
         <label for="password">비밀번호</label> <input type="password" name="password" class="form-control"
                                                              placeholder="비밀번호" id="password">
     </div>
-    <input hidden="hidden" value="">
+    <select name="role">
+        <option th:each="memberRole : ${T(com.aswemake.entity.enums.MemberRole).values()}"
+                th:value="${memberRole}" th:text="${memberRole}"></option>
+    </select>
     <button id="signupBtn" type="button" class="btn btn-primary">회원가입</button>
 </div>
 </body>

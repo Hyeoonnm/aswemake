@@ -33,12 +33,10 @@ public class OrderItemEntity {
         return product.getPrice() * getCount();
     }
 
-    public static OrderItemDTO toDTO(OrderItemEntity entity) {
+    public static OrderItemDTO toDTO(ProductEntity product, MemberEntity member) {
         return OrderItemDTO.builder()
-                .memberId(entity.getId())
-                .productId(entity.getId())
-                .count(entity.getCount())
-                .totalPrice(entity.getTotalPrice())
+                .memberId(member.getId())
+                .productId(product.getId())
                 .build();
     }
 }

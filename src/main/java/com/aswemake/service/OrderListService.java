@@ -1,13 +1,14 @@
 package com.aswemake.service;
 
 import com.aswemake.dto.OrderItemDTO;
-
-import java.util.List;
+import com.aswemake.dto.repOrderItemDTO;
 
 public interface OrderListService {
     OrderItemDTO save(OrderItemDTO dto);
 
-    List<OrderItemDTO> findAll();
-
     void delete(Long memberId, Long productId);
+
+    repOrderItemDTO findAllByMemberId(Long memberId);
+
+    int total(Long memberId);
 }
