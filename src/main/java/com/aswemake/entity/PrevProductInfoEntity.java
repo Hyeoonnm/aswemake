@@ -27,8 +27,7 @@ public class PrevProductInfoEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-    public static PrevProductInfoEntity toEntity(ProductDTO dto, PrevProductInfoEntity prevInfo, int price) {
-        ProductEntity entity = ProductDTO.toEntity(dto);
+    public static PrevProductInfoEntity toEntity(ProductDTO dto, PrevProductInfoEntity prevInfo, int price, ProductEntity entity) {
 
         // 첫 수정 상품
         if (prevInfo == null) {

@@ -26,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
         dto.setCreateDate(LocalDateTime.now());
         ProductEntity toEntity = ProductDTO.toEntity(dto);
         ProductEntity save = productDAO.save(toEntity);
+        System.out.println(save.getId());
 
         return ProductEntity.toDTO(save);
     }
@@ -57,35 +58,33 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO update(ProductDTO dto) {
-        ProductEntity entity = productDAO.findProductById(dto.getId());
-        ProductDTO findProduct = ProductEntity.toDTO(entity);
-
-        int price = findProduct.getPrice();
-
-        setValue(dto, findProduct);
-
-        ProductEntity toEntity = ProductDTO.toEntity(findProduct);
-
-        if (productDAO.findProductById(toEntity.getId()) != null) {
-            ProductEntity product = productDAO.findProductById(toEntity.getId());
+    public ProductDTO update(Long id,ProductDTO dto) {
+        ProductEntity entity = productDAO.findProductById(id);
+        if (entity == null) {
+            dto.setCreateDate(LocalDateTime.now());
+            productDAO.save(ProductDTO.toEntity(dto));
         }
 
-        if (findProduct.getModifiedDate() != null) {
-            Long id = toEntity.getId();
+        int price = entity.getPrice(); // 수정 내역을 남기기 위한 가격
+        entity.setName(dto.getName());
+        entity.setPrice(dto.getPrice());
+        entity.setModifiedDate(LocalDateTime.now());
+        ProductEntity save = productDAO.save(entity);
+
+        if (entity.getModifiedDate() != null) {
+            Long saveId = save.getId();
             PrevProductInfoEntity byProductId;
             List<PrevProductInfoEntity> list = prevProductInfoDAO.findAllByProductId(id);
             if (list.size() > 1) {
                 byProductId = list.get(list.size()-1);
-                price = byProductId.getPrice();
             } else {
                 byProductId = prevProductInfoDAO.findByProductId(id);
             }
-            PrevProductInfoEntity prevEntity = PrevProductInfoEntity.toEntity(findProduct, byProductId, price);
+            PrevProductInfoEntity prevEntity = PrevProductInfoEntity.toEntity(ProductEntity.toDTO(save), byProductId, price, save);
             prevProductInfoDAO.save(prevEntity);
         }
 
-        return ProductEntity.toDTO(toEntity);
+        return ProductEntity.toDTO(save);
     }
 
     @Override
@@ -99,15 +98,5 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
         prevProductInfoDAO.deleteByProductId(id);
         productDAO.deleteById(id);
-    }
-
-    private static void setValue(ProductDTO dto, ProductDTO findProduct) {
-        dto.setCreateDate(findProduct.getCreateDate());
-        dto.setModifiedDate(LocalDateTime.now());
-
-        findProduct.setPrice(dto.getPrice());
-        findProduct.setName(dto.getName());
-        findProduct.setCreateDate(dto.getCreateDate());
-        findProduct.setModifiedDate(dto.getModifiedDate());
     }
 }

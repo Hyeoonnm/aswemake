@@ -17,5 +17,5 @@ public interface ProductService {
 
     List<ProductDTO> findAll();
 
-    ProductDTO update(ProductDTO findProduct);
+    ProductDTO update(Long id, ProductDTO findProduct);
 }

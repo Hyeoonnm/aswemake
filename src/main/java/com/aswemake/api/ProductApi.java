@@ -33,12 +33,9 @@ public class ProductApi {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
         dto.setId(id);
-        ProductDTO update = productService.update(dto);
-        if (update != null) {
-            return ResponseEntity.ok().body("상품 수정 완료");
-        } else {
-            return ResponseEntity.badRequest().body("상품 수정 실패");
-        }
+
+        ProductDTO update = productService.update(id, dto);
+        return ResponseEntity.ok().body("상품 수정 완료");
     }
 
     @DeleteMapping("/delete/{id}")
@@ -50,9 +47,6 @@ public class ProductApi {
     @GetMapping("/prev/{id}")
     public ResponseEntity<List<PrevProductInfoDTO>> list(@PathVariable Long id) {
         List<PrevProductInfoDTO> list = productService.findPrevProduct(id);
-        if (list.size() < 1) {
-            return ResponseEntity.badRequest().build();
-        }
         return ResponseEntity.ok().body(list);
     }
 }

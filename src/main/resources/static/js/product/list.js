@@ -144,11 +144,12 @@ document.getElementById("productList").addEventListener("click", function (event
             .then((response) => {
                 if (response.ok) {
                     return response.json();
-                } else {
-                    alert("수정 내역이 없습니다.");
                 }
             })
             .then((data) => {
+                if (data === undefined) {
+                    return alert("수정 내역이 없습니다.");
+                }
                 let tableContent = "수정 내역:\n\n";
 
                 for (let i = 0; i < data.length; i++) {

@@ -43,7 +43,7 @@ class ProductServiceImplTest {
         ProductDTO byId = productService.findById(save.getId());
 
         byId.setPrice(2000); // 업데이트 하려는 가격
-        ProductDTO update = productService.update(byId); // 업데이트 하고 난 후의 가격
+        ProductDTO update = productService.update(byId.getId(), byId); // 업데이트 하고 난 후의 가격
 
         // 업데이트 하려는 가격과 업데이트 하고 난 후의 가격을 비교
         assertThat(update.getPrice()).isEqualTo(byId.getPrice());
@@ -62,7 +62,7 @@ class ProductServiceImplTest {
         ProductDTO byId = productService.findById(save.getId());
 
         byId.setPrice(2000); // 업데이트 하고 난 후의 가격 1회 업데이트
-        ProductDTO update = productService.update(byId);
+        ProductDTO update = productService.update(byId.getId(), byId);
 
         List<PrevProductInfoDTO> prevProduct = productService.findPrevProduct(update.getId());
 
