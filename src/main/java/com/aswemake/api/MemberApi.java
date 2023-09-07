@@ -17,7 +17,7 @@ public class MemberApi {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody MemberDTO dto) throws Exception {
-        Long signup = memberService.signup(dto);
+        MemberDTO signup = memberService.signup(dto);
         if (signup == null) {
             return ResponseEntity.badRequest().body("회원가입 실패");
         }else return ResponseEntity.ok("회원가입 성공");

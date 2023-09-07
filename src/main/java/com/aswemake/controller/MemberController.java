@@ -39,10 +39,4 @@ public class MemberController {
         model.addAttribute("user", loginUser);
         return "member/info";
     }
-
-    @GetMapping("/admin")
-    public String adminPage() {
-
-        return "member/admin";
-    }
 }

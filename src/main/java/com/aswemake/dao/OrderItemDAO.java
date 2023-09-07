@@ -11,4 +11,6 @@ public interface OrderItemDAO extends JpaRepository<OrderItemEntity, Long> {
     void deleteByMemberIdAndProductId(Long memberId, Long productId);
 
     List<OrderItemEntity> findAllByMemberId(Long memberId);
+
+    Object findByMemberIdAndProductId(Long memberId, Long productId);
 }

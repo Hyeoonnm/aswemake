@@ -8,46 +8,30 @@ import com.aswemake.entity.PrevProductInfoEntity;
 import com.aswemake.entity.ProductEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductDAO productDAO;
     private final PrevProductInfoDAO prevProductInfoDAO;
 
     @Override
-    @Transactional
-    public void save(ProductDTO dto) {
+    public ProductDTO save(ProductDTO dto) {
+        dto.setCreateDate(LocalDateTime.now());
         ProductEntity toEntity = ProductDTO.toEntity(dto);
-        int price = 0;
-        if (productDAO.findProductById(toEntity.getId()) != null) {
-            ProductEntity product = productDAO.findProductById(toEntity.getId());
-            price = product.getPrice();
-        }
-
-        if (dto.getModifiedDate() != null) {
-            Long id = toEntity.getId();
-            PrevProductInfoEntity byProductId;
-            List<PrevProductInfoEntity> list = prevProductInfoDAO.findAllByProductId(id);
-            if (list.size() > 1) {
-              byProductId = list.get(list.size()-1);
-            } else {
-                byProductId = prevProductInfoDAO.findByProductId(id);
-            }
-            PrevProductInfoEntity prevEntity = PrevProductInfoEntity.toEntity(dto, byProductId, price);
-            prevProductInfoDAO.save(prevEntity);
-        }
-
         ProductEntity save = productDAO.save(toEntity);
 
-        ProductEntity.toDTO(save);
+        return ProductEntity.toDTO(save);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PrevProductInfoDTO> findPrevProduct(Long id) {
         List<PrevProductInfoEntity> entities = prevProductInfoDAO.findAllByProductId(id);
 
@@ -60,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductDTO> findAll() {
         List<ProductEntity> list = productDAO.findAll();
         List<ProductDTO> dtoList = new ArrayList<>();
@@ -72,15 +57,57 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductDTO update(ProductDTO dto) {
+        ProductEntity entity = productDAO.findProductById(dto.getId());
+        ProductDTO findProduct = ProductEntity.toDTO(entity);
+
+        int price = findProduct.getPrice();
+
+        setValue(dto, findProduct);
+
+        ProductEntity toEntity = ProductDTO.toEntity(findProduct);
+
+        if (productDAO.findProductById(toEntity.getId()) != null) {
+            ProductEntity product = productDAO.findProductById(toEntity.getId());
+        }
+
+        if (findProduct.getModifiedDate() != null) {
+            Long id = toEntity.getId();
+            PrevProductInfoEntity byProductId;
+            List<PrevProductInfoEntity> list = prevProductInfoDAO.findAllByProductId(id);
+            if (list.size() > 1) {
+                byProductId = list.get(list.size()-1);
+                price = byProductId.getPrice();
+            } else {
+                byProductId = prevProductInfoDAO.findByProductId(id);
+            }
+            PrevProductInfoEntity prevEntity = PrevProductInfoEntity.toEntity(findProduct, byProductId, price);
+            prevProductInfoDAO.save(prevEntity);
+        }
+
+        return ProductEntity.toDTO(toEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         ProductEntity byId = productDAO.findProductById(id);
         return ProductEntity.toDTO(byId);
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         prevProductInfoDAO.deleteByProductId(id);
         productDAO.deleteById(id);
+    }
+
+    private static void setValue(ProductDTO dto, ProductDTO findProduct) {
+        dto.setCreateDate(findProduct.getCreateDate());
+        dto.setModifiedDate(LocalDateTime.now());
+
+        findProduct.setPrice(dto.getPrice());
+        findProduct.setName(dto.getName());
+        findProduct.setCreateDate(dto.getCreateDate());
+        findProduct.setModifiedDate(dto.getModifiedDate());
     }
 }

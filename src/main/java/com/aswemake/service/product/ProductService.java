@@ -11,9 +11,11 @@ public interface ProductService {
 
     void delete(Long id);
 
-    void save(ProductDTO productDTO);
+    ProductDTO save(ProductDTO productDTO);
 
     List<PrevProductInfoDTO> findPrevProduct(Long id);
 
     List<ProductDTO> findAll();
+
+    ProductDTO update(ProductDTO findProduct);
 }

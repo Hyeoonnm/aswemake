@@ -29,14 +29,11 @@ public class OrderItemEntity {
 
     private int count;
 
-    public int getTotalPrice() {
-        return product.getPrice() * getCount();
-    }
-
-    public static OrderItemDTO toDTO(ProductEntity product, MemberEntity member) {
+    public static OrderItemDTO toDTO(ProductEntity product, MemberEntity member, int count) {
         return OrderItemDTO.builder()
                 .memberId(member.getId())
                 .productId(product.getId())
+                .count(count)
                 .build();
     }
 }

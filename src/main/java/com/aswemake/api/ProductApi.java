@@ -25,24 +25,16 @@ public class ProductApi {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> add(@RequestBody ProductDTO productDTO) {
-        productDTO.setCreateDate(LocalDateTime.now());
-        productService.save(productDTO);
-        return ResponseEntity.ok().body("상품 등록");
+    public ResponseEntity<ProductDTO> add(@RequestBody ProductDTO productDTO) {
+        ProductDTO save = productService.save(productDTO);
+        return ResponseEntity.ok().body(save);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
-        ProductDTO findProduct = productService.findById(id);
-        if (findProduct != null) {
-            dto.setCreateDate(findProduct.getCreateDate());
-            dto.setModifiedDate(LocalDateTime.now());
-
-            findProduct.setPrice(dto.getPrice());
-            findProduct.setName(dto.getName());
-            findProduct.setCreateDate(dto.getCreateDate());
-            findProduct.setModifiedDate(dto.getModifiedDate());
-            productService.save(findProduct);
+        dto.setId(id);
+        ProductDTO update = productService.update(dto);
+        if (update != null) {
             return ResponseEntity.ok().body("상품 수정 완료");
         } else {
             return ResponseEntity.badRequest().body("상품 수정 실패");
