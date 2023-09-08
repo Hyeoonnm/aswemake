@@ -1,7 +1,5 @@
 # aswemake 과제
 
-java11, spring boot 2.7.15, Maria DB
-
 실행 방법
 
 mariaDB에 aswemake 데이터베이스 생성 후 계정 생성
