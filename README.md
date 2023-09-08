@@ -53,6 +53,13 @@ param : loginId, password, role
 
 ### 로그인
 
+Authorization에 Basic Auth 선택
+
+username, password 회원가입 한 회원 혹은 db에 설정된 admin, user로 입력 후
+
+이후 모든 테스트를 진행합니다.
+
+
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/3874e7d8-10b1-4b53-8812-899bf96126ea)
 
 
