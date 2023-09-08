@@ -14,21 +14,20 @@ Postman을 활용한 테스트 방식
 Member
 user, admin
 #### USER pk : 1
+- user 1의 주문 목록에 3가지 상품 등록
 #### ADMIN pk : 2
 
 ### 비밀번호 : 1234
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/44eba5bd-784c-40f2-bb10-90f79e8a7775)
 
-
 Product
 
-![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/cbb6264f-debd-4679-9142-ccd37c8bbccb)
+![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/99a5a297-b161-4f5e-9144-06f3d68687bf)
 
 PrevProductInfo
 
-![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/68e4fa4a-7610-4a78-82f7-ca9eb14634de)
-
+![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/473a117b-36ce-41b4-9a40-4b0af4e06310)
 
 OrderItem
 
@@ -37,8 +36,6 @@ OrderItem
 Coupon
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/4775d347-5e91-4c9d-aa3a-cde62322436e)
-
-
 
 <br>
 
@@ -66,6 +63,7 @@ param : loginId, password, role
 - URL : GET "product/api/list"
 
 사용자가 상품의 목록을 조회하는데 사용합니다.
+Role의 경우 USER 혹은 ADMIN으로 입력합니다.
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/177e70e2-476c-477b-9081-cfc57dbde43e)
 
