@@ -36,7 +36,7 @@ class MemberServiceImplTest {
 
     private MemberDTO getSignup() throws Exception {
         MemberDTO user = new MemberDTO();
-        user.setLoginId("user");
+        user.setLoginId("test_user");
         user.setPassword("user");
         user.setRole(MemberRole.USER);
         return memberService.signup(user);

@@ -17,12 +17,14 @@ import com.aswemake.service.member.MemberService;
 import com.aswemake.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
+@Profile("!test")
 public class SampleDataLoader implements CommandLineRunner {
     private final CouponDAO couponDAO;
     private final MemberService memberService;
