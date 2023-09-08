@@ -10,6 +10,11 @@ mariaDB에 aswemake 데이터베이스 생성 후 계정 생성
 
 Postman을 활용한 테스트 방식
 
+좌측상단 메뉴 클릭시 편하게 확인 가능합니다!
+
+![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/6032d521-4404-4773-a0f3-37e4906fa8cb)
+
+
 # DB
 Member
 user, admin
