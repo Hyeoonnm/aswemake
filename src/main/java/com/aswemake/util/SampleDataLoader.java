@@ -55,7 +55,8 @@ public class SampleDataLoader implements CommandLineRunner {
         save.setName("딸기 -> 청포도");
         save.setPrice(2000);
         ProductDTO update = productService.update(save.getId(), ProductEntity.toDTO(save));
-        update.setName("딸기 -> 청포도 -> 복숭아");
+        update.setName("복숭아");
+        update.setPrice(3000);
         productService.update(update.getId(), update);
 
         MemberDTO user = new MemberDTO();

@@ -47,6 +47,10 @@ public class ProductApi {
     @GetMapping("/prev/{id}")
     public ResponseEntity<List<PrevProductInfoDTO>> list(@PathVariable Long id) {
         List<PrevProductInfoDTO> list = productService.findPrevProduct(id);
+        for (PrevProductInfoDTO x :
+                list) {
+            x.setId(id);
+        }
         return ResponseEntity.ok().body(list);
     }
 }
