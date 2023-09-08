@@ -18,7 +18,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
+                .httpBasic().and()
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .formLogin()
                 .usernameParameter("loginId")
                 .passwordParameter("password")
-                .loginProcessingUrl("/login")  // 로그인 Form Action Url
+                .loginProcessingUrl("/perform-login")  // 로그인 Form Action Url
                 .loginPage("/member/login")
                 .defaultSuccessUrl("/member/info")
                 .failureUrl("/member/login")
