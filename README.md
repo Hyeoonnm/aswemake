@@ -10,6 +10,11 @@ mariaDB에 aswemake 데이터베이스 생성 후 계정 생성
 
 Postman을 활용한 테스트 방식
 
+좌측상단 메뉴 클릭시 편하게 확인 가능합니다!
+
+![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/6032d521-4404-4773-a0f3-37e4906fa8cb)
+
+
 # DB
 Member
 user, admin
@@ -41,7 +46,7 @@ Coupon
 
 # API
 ### Member
-### 엔드포인트
+### 회원가입
 - URL : POST "member/api/signup"
 
 param : loginId, password, role
@@ -66,7 +71,7 @@ username, password 회원가입 한 회원 혹은 db에 설정된 admin, user로
 <br>
 
 ### Product
-### 엔드포인트
+### 상품 목록
 - URL : GET "product/api/list"
 
 사용자가 상품의 목록을 조회하는데 사용합니다.
@@ -76,6 +81,9 @@ Role의 경우 USER 혹은 ADMIN으로 입력합니다.
 
 
 <br>
+
+### 상품 등록
+
 - URL : POST "product/api/add"
 
 param : name, price
@@ -86,6 +94,9 @@ param : name, price
 
 
 <br>
+
+### 상품 수정
+
 - URL : PUT "product/api/update/{productId}"
 
 param : name, price
@@ -96,6 +107,9 @@ param : name, price
 
 
 <br>
+
+### 상품 삭제
+
 - URL : DELETE "product/api/delete/{productId}"
 
 관리자만이 접근 할 수 있으며 상품을 삭제하는데 사용합니다.
@@ -104,6 +118,9 @@ param : name, price
 
 
 <br>
+
+### 수정 내역 조회
+
 - URL : GET "product/api/prev/{productId}"
 
 수정된 상품의 수정 내역을 조회하는데 사용합니다.
@@ -114,7 +131,7 @@ param : name, price
 <br>
 
 ### OrdeItem
-### 엔드포인트
+### 주문 목록 조회
 - URL : GET "orderList/api/list/{memberId}"
 
 사용자의 주문 목록을 확인하는데 사용합니다.
@@ -123,17 +140,23 @@ param : name, price
 
 
 <br>
+
+### 주문 추가
+
 - URL : POST "orderLsit/api/add"
 
 param : productId, memberId, count
 
-사용자가 주문 목록에 등록한 상품의 개수, 등록한 상품의 pk, 사용자의 pk를 저장합니다.
+사용자가 주문 목록에 상품의 개수, 등록한 상품의 pk, 사용자의 pk를 저장합니다.
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/5e7ba0db-27a0-4e3b-b406-b0bbcd622c71)
 
 
 
 <br>
+
+### 주문 목록 삭제
+
 - URL : DELETE "orderList/api/delete/{memberId}/{productId}"
 
 주문 목록에 있는 상품을 삭제하는데 사용합니다.
@@ -142,6 +165,9 @@ param : productId, memberId, count
 
 
 <br>
+
+### 주문 목록 총 가격
+
 - URL : GET "orderList/api/total/{memberId}"
 
 사용자의 주문 목록에 있는 상품들의 총 가격을 나타내줍니다.
@@ -152,35 +178,42 @@ param : productId, memberId, count
 <br>
 
 ### Coupon
-### 엔드포인트
+### 전체 상품 쿠폰
 - URL : POST "coupon/api/whole"
 
 param : couponName, memberId
+
 param에 담긴 사용자의 아이디를 사용해서 주문 목록을 조회 후
 
-couponName = wholeFix -> 전체 상품 가격의 고정 가격을 할인해줍니다.
+couponName = wholeFix -> 전체 상품 가격의 고정 가격을 할인해줍니다. (3000원)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/983a210b-9f0c-43bc-9222-6b98aff93ea8)
 
 
-couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍니다.
+couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍니다. (30%)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/8635ead3-0ec9-4da8-848d-48bf72b22fe5)
 
 
 
 <br>
+
+### 개별 상품 쿠폰
+
 - URL : POST "coupon/api/specific"
 
 param : couponName, memberId, productId
-param에 담긴 사용자의 아이디를 사용해서 주문 목록을 조회 후 productId를 사용해 특정 상품을 찾아 온 후
 
-couponName = specificFix -> 특정 상품 가격의 고정 가격을 할인해줍니다. (개별 적용)
+param에 담긴 사용자의 아이디를 사용해서 주문 목록을 조회 후
+
+productId를 사용해 특정 상품을 찾아 온 후
+
+couponName = specificFix -> 특정 상품 가격의 고정 가격을 할인해줍니다. (개별 적용 개당 300원)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/bec8fe81-ac0b-4be8-9fb4-c91e652d0296)
 
 
-couponName = specificProportion -> 특정 상품 가격의 비율 할인을 해줍니다. (개별 적용)
+couponName = specificProportion -> 특정 상품 가격의 비율 할인을 해줍니다. (개별 적용 개당 10%)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/ae091147-e6bf-43de-9335-6abdf4311b20)
 
