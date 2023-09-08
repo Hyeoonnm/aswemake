@@ -1,5 +1,6 @@
 package com.aswemake.api;
 
+import com.aswemake.dto.CouponDTO;
 import com.aswemake.service.coupon.CouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,14 @@ public class CouponApi {
     private final CouponService couponService;
 
     @PostMapping("/whole")
-    public ResponseEntity<Integer> whole(@RequestBody Long memberId, String couponName) {
-        int result = couponService.whole(memberId,couponName);
+    public ResponseEntity<Integer> whole(@RequestBody CouponDTO dto) {
+        int result = couponService.whole(dto.getMemberId(), dto.getCouponName());
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/specific")
-    public ResponseEntity<Integer> specific(@RequestBody Long memberId, String couponName, Long productId) {
-        int result = couponService.specific(memberId,couponName,productId);
+    public ResponseEntity<Integer> specific(@RequestBody CouponDTO dto) {
+        int result = couponService.specific(dto.getMemberId(), dto.getCouponName(), dto.getProductId());
         return ResponseEntity.ok(result);
     }
 }

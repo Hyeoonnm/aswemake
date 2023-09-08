@@ -52,7 +52,7 @@ class ProductApiTest {
 
     @Test
     @DisplayName("상품 목록 조회 [ADMIN]")
-    @WithMockUser(username = "user", authorities = "ADMIN")
+    @WithMockUser(username = "admin", authorities = "ADMIN")
     void list_admin() throws Exception {
         mockMvc.perform(get("/product/api/list"))
                 .andExpect(status().isOk())

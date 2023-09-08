@@ -1,8 +1,9 @@
-package com.aswemake.service.product;
+package com.aswemake.service;
 
 import com.aswemake.dao.ProductDAO;
 import com.aswemake.dto.PrevProductInfoDTO;
 import com.aswemake.dto.ProductDTO;
+import com.aswemake.service.product.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

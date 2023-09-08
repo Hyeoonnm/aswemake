@@ -22,9 +22,7 @@ public class CouponServiceImpl implements CouponService {
         double proportion = 0.7;
         int productTotalPrice = 0;
 
-//        CouponEntity byName = couponDAO.findByName(couponName);
         List<OrderItemEntity> allByMemberId = orderItemDAO.findAllByMemberId(memberId);
-//        byName.getName()
         if (couponName.equals("wholeFix")) {
             for (OrderItemEntity x :
                  allByMemberId) {
@@ -52,9 +50,7 @@ public class CouponServiceImpl implements CouponService {
         double proportion = 0.9;
         int productTotalPrice = 0;
 
-//        CouponEntity byName = couponDAO.findByName(couponName);
         List<OrderItemEntity> allByMemberId = orderItemDAO.findAllByMemberId(memberId);
-//        byName.getName()
         if (couponName.equals("specificFix")) {
             for (OrderItemEntity x :
                     allByMemberId) {

@@ -1,4 +1,4 @@
-package com.aswemake.service.orderList;
+package com.aswemake.service;
 
 import com.aswemake.dao.MemberDAO;
 import com.aswemake.dao.OrderItemDAO;
@@ -9,6 +9,7 @@ import com.aswemake.dto.repOrderItemDTO;
 import com.aswemake.entity.MemberEntity;
 import com.aswemake.entity.OrderItemEntity;
 import com.aswemake.entity.ProductEntity;
+import com.aswemake.service.orderList.OrderItemService;
 import com.aswemake.service.product.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

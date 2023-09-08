@@ -1,4 +1,4 @@
-package com.aswemake.service.coupon;
+package com.aswemake.service;
 
 import com.aswemake.dao.CouponDAO;
 import com.aswemake.dao.MemberDAO;
@@ -8,6 +8,7 @@ import com.aswemake.dto.MemberDTO;
 import com.aswemake.dto.OrderItemDTO;
 import com.aswemake.entity.MemberEntity;
 import com.aswemake.entity.ProductEntity;
+import com.aswemake.service.coupon.CouponService;
 import com.aswemake.service.orderList.OrderItemService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

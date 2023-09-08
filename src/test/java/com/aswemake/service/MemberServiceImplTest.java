@@ -1,9 +1,10 @@
-package com.aswemake.service.member;
+package com.aswemake.service;
 
 import com.aswemake.dao.MemberDAO;
 import com.aswemake.dto.MemberDTO;
 import com.aswemake.entity.MemberEntity;
 import com.aswemake.entity.enums.MemberRole;
+import com.aswemake.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

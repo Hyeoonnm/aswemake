@@ -14,7 +14,6 @@ public class OrderItemDTO {
     private Long productId;
     private int count;
     private Long memberId;
-    private int totalPrice;
 
     public static OrderItemEntity toEntity(OrderItemDTO dto, MemberEntity member, ProductEntity product) {
         return OrderItemEntity.builder()
