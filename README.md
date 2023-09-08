@@ -76,7 +76,9 @@ Role의 경우 USER 혹은 ADMIN으로 입력합니다.
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : POST "product/api/add"
 
 param : name, price
@@ -87,7 +89,9 @@ param : name, price
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : PUT "product/api/update/{productId}"
 
 param : name, price
@@ -98,7 +102,9 @@ param : name, price
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : DELETE "product/api/delete/{productId}"
 
 관리자만이 접근 할 수 있으며 상품을 삭제하는데 사용합니다.
@@ -107,7 +113,9 @@ param : name, price
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : GET "product/api/prev/{productId}"
 
 수정된 상품의 수정 내역을 조회하는데 사용합니다.
@@ -127,7 +135,9 @@ param : name, price
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : POST "orderLsit/api/add"
 
 param : productId, memberId, count
@@ -139,7 +149,9 @@ param : productId, memberId, count
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : DELETE "orderList/api/delete/{memberId}/{productId}"
 
 주문 목록에 있는 상품을 삭제하는데 사용합니다.
@@ -148,7 +160,9 @@ param : productId, memberId, count
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : GET "orderList/api/total/{memberId}"
 
 사용자의 주문 목록에 있는 상품들의 총 가격을 나타내줍니다.
@@ -178,7 +192,9 @@ couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍�
 
 
 <br>
+
 ### 엔드포인트
+
 - URL : POST "coupon/api/specific"
 
 param : couponName, memberId, productId
