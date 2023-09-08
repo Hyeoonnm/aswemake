@@ -156,14 +156,15 @@ param : productId, memberId, count
 - URL : POST "coupon/api/whole"
 
 param : couponName, memberId
+
 param에 담긴 사용자의 아이디를 사용해서 주문 목록을 조회 후
 
-couponName = wholeFix -> 전체 상품 가격의 고정 가격을 할인해줍니다.
+couponName = wholeFix -> 전체 상품 가격의 고정 가격을 할인해줍니다. (3000원)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/983a210b-9f0c-43bc-9222-6b98aff93ea8)
 
 
-couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍니다.
+couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍니다. (30%)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/8635ead3-0ec9-4da8-848d-48bf72b22fe5)
 
@@ -173,14 +174,17 @@ couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍�
 - URL : POST "coupon/api/specific"
 
 param : couponName, memberId, productId
-param에 담긴 사용자의 아이디를 사용해서 주문 목록을 조회 후 productId를 사용해 특정 상품을 찾아 온 후
 
-couponName = specificFix -> 특정 상품 가격의 고정 가격을 할인해줍니다. (개별 적용)
+param에 담긴 사용자의 아이디를 사용해서 주문 목록을 조회 후
+
+productId를 사용해 특정 상품을 찾아 온 후
+
+couponName = specificFix -> 특정 상품 가격의 고정 가격을 할인해줍니다. (개별 적용 개당 300원)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/bec8fe81-ac0b-4be8-9fb4-c91e652d0296)
 
 
-couponName = specificProportion -> 특정 상품 가격의 비율 할인을 해줍니다. (개별 적용)
+couponName = specificProportion -> 특정 상품 가격의 비율 할인을 해줍니다. (개별 적용 개당 10%)
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/ae091147-e6bf-43de-9335-6abdf4311b20)
 
