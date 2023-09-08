@@ -41,7 +41,7 @@ Coupon
 
 # API
 ### Member
-### 엔드포인트
+### 회원가입
 - URL : POST "member/api/signup"
 
 param : loginId, password, role
@@ -66,7 +66,7 @@ username, password 회원가입 한 회원 혹은 db에 설정된 admin, user로
 <br>
 
 ### Product
-### 엔드포인트
+### 상품 목록
 - URL : GET "product/api/list"
 
 사용자가 상품의 목록을 조회하는데 사용합니다.
@@ -77,7 +77,7 @@ Role의 경우 USER 혹은 ADMIN으로 입력합니다.
 
 <br>
 
-### 엔드포인트
+### 상품 등록
 
 - URL : POST "product/api/add"
 
@@ -90,7 +90,7 @@ param : name, price
 
 <br>
 
-### 엔드포인트
+### 상품 수정
 
 - URL : PUT "product/api/update/{productId}"
 
@@ -103,7 +103,7 @@ param : name, price
 
 <br>
 
-### 엔드포인트
+### 상품 삭제
 
 - URL : DELETE "product/api/delete/{productId}"
 
@@ -114,7 +114,7 @@ param : name, price
 
 <br>
 
-### 엔드포인트
+### 수정 내역 조회
 
 - URL : GET "product/api/prev/{productId}"
 
@@ -126,7 +126,7 @@ param : name, price
 <br>
 
 ### OrdeItem
-### 엔드포인트
+### 주문 목록 조회
 - URL : GET "orderList/api/list/{memberId}"
 
 사용자의 주문 목록을 확인하는데 사용합니다.
@@ -136,13 +136,13 @@ param : name, price
 
 <br>
 
-### 엔드포인트
+### 주문 추가
 
 - URL : POST "orderLsit/api/add"
 
 param : productId, memberId, count
 
-사용자가 주문 목록에 등록한 상품의 개수, 등록한 상품의 pk, 사용자의 pk를 저장합니다.
+사용자가 주문 목록에 상품의 개수, 등록한 상품의 pk, 사용자의 pk를 저장합니다.
 
 ![image](https://github.com/Hyeoonnm/aswemake/assets/105695601/5e7ba0db-27a0-4e3b-b406-b0bbcd622c71)
 
@@ -150,7 +150,7 @@ param : productId, memberId, count
 
 <br>
 
-### 엔드포인트
+### 주문 목록 삭제
 
 - URL : DELETE "orderList/api/delete/{memberId}/{productId}"
 
@@ -161,7 +161,7 @@ param : productId, memberId, count
 
 <br>
 
-### 엔드포인트
+### 주문 목록 총 가격
 
 - URL : GET "orderList/api/total/{memberId}"
 
@@ -173,7 +173,7 @@ param : productId, memberId, count
 <br>
 
 ### Coupon
-### 엔드포인트
+### 전체 상품 쿠폰
 - URL : POST "coupon/api/whole"
 
 param : couponName, memberId
@@ -193,7 +193,7 @@ couponName = wholeProportion -> 전체 상품 가격의 비율 할인을 해줍�
 
 <br>
 
-### 엔드포인트
+### 개별 상품 쿠폰
 
 - URL : POST "coupon/api/specific"
 
